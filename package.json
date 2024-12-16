@@ -1,0 +1,32 @@
+{
+  "name": "abbyy_automation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "pw:install": "npx playwright install",
+    "test:plan": "npx playwright test --reporter=list --project=chromium --list",
+    "test:ui": "npx playwright test --ui",
+    "test:trace": "npx playwright show-trace",
+    "test:debug": "npx playwright test --project=chromium --debug",
+    "test": "npx playwright test --project=chromium",
+    "test:firefox": "npx playwright test --project=firefox",
+    "test:edge": "npx playwright test --project=edge",
+    "test:ci": "npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0",
+  "description": "",
+  "dependencies": {
+    "@react-email/components": "^0.0.7",
+    "express": "^4.21.2",
+    "react": "18.2.0",
+    "resend": "4.0.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2",
+    "dotenv": "^16.4.7",
+    "typescript": "5.7.2"
+  }
+}
