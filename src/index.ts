@@ -1,5 +1,5 @@
 import { chromium } from "playwright";
-import { serverLicense } from "./email_config"
+import { sendLicenseEmail } from "./email_config.js";
 
 const selectors = {
   inputUsername: "input[id='userName']",
@@ -16,7 +16,6 @@ async function getLicenseCount() {
   const link: string = process.env.ABBYLINK!;
   await page.goto(link);
 
-
   const user: string = process.env.ABBYYUSERNAME!;
   const password: string = process.env.ABBYPASSWORD!;
 
@@ -30,13 +29,10 @@ async function getLicenseCount() {
 
   await buttonLogin.click();
 
-  const license: string | null = await page.textContent(
-    selectors.divLicense
-  );
+  const license: string | null = await page.textContent(selectors.divLicense);
   console.log(license);
-
-  serverLicense(license);
+  await browser.close();
+  sendLicenseEmail(license);
 }
 
-getLicenseCount()
-
+getLicenseCount();

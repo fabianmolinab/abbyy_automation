@@ -1,32 +1,34 @@
 import { Resend } from "resend";
-import express, { Request, Response } from "express";
 
-const resend: Resend = new Resend(process.env.APIKEY!);
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
-export function serverLicense(licenseNumber: string | null) {
-  const app = express();
-  console.log("Resend console " + resend);
-  if (licenseNumber === null) {
-    licenseNumber = "No disponible";
-  }
+// Define __dirname en ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-  app.get("/", async (req: Request, res: Response) : Promise<void> => {
-    try {
-      const { data, error } = await resend.emails.send({
-        from: "Acme <onboarding@resend.dev>",
-        to: process.env.EMAIL_TO!,
-        subject: "Hello World",
-        html: `<h1>El número de licencias es: ${licenseNumber}</h1>`,
-      });
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
-      if (error) {
-        res.status(400).json({ error });
-        return; // Finaliza la función
-      }
+console.log(process.env.APIKEY);
 
-      res.status(200).json({ data });
-    } catch (err) {
-      res.status(500).send("Error interno del servidor");
+const resend: Resend = new Resend(process.env.APIKEY);
+
+export async function sendLicenseEmail(licenseNumber: string) {
+  try {
+    const { data, error } = await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: process.env.EMAIL_TO!,
+      subject: "Numero de licencias de ABBYY!",
+      html: `<h1>El número de licencias es: ${licenseNumber}</h1>`,
+    });
+
+    if (error) {
+      console.error("Error al enviar el correo:", error);
+    } else {
+      console.log("Correo enviado exitosamente:", data);
     }
-  })
-};
+  } catch (err) {
+    console.error("Error interno al enviar el correo:", err);
+  }
+}
