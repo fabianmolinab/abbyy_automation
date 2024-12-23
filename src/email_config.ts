@@ -10,8 +10,6 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
-console.log(process.env.APIKEY);
-
 const resend: Resend = new Resend(process.env.APIKEY);
 
 export async function sendLicenseEmail(licenseNumber: string) {
