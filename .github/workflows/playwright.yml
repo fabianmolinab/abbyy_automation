@@ -34,7 +34,7 @@ jobs:
 
       - name: Debug environment variables
         run: |
-          echo "MY_URL=${{secrets.API_KEY}}"
+          cat .env
 
       - name: Config Node.js
         uses: actions/setup-node@v4
