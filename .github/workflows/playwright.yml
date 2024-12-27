@@ -1,27 +1,35 @@
-name: Playwright Tests
+name: ABBYY Automation
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+  schedule:
+    - cron: "0 13 * * *" # 8am Hora Colombia (UTC -5)
+  workflow_dispatch:
+
 jobs:
-  test:
-    timeout-minutes: 60
+  envio-email:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      - name: checkout code
+      - uses: actions/checkout@v4
+
+      - name: Load .env manually
+        run: |
+          export $(cat .env | xargs)
+
+      - name: Print environment variable
+        run: echo "API_KEY is $API_KEY"
+
+      - name: Check if .env exists
+        run: |
+          if [ ! -f .env ]; then
+            echo ".env file not found!"
+            exit 1
+          fi
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install
+      - name: Development
+        run: npm run dev
