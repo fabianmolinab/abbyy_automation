@@ -32,10 +32,13 @@ jobs:
           source .env
           echo "API_KEY is $API_KEY"
 
-      - name: Configurar Node.js
+      - name: Config Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      - name: Validate Node and npm
+        run: node -v && npm -v
 
       - name: Install dependencies
         run: npm install
