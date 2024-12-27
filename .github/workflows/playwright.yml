@@ -15,9 +15,9 @@ jobs:
       - name: Create .env file from repository secrets
         run: |
           echo "ABBYLINK=${{ secrets.ABBYYLINK}}" > .env
-          echo "ABBYUSERNAME=${{secrets.ABBYUSERNAME}}" >> .env
-          echo "ABBYPASSWORD=${{secrets.ABBYPASSWORD}}" >> .env
-          echo "EMAIL_TO=${{secrets.EMAIL_TO}}" >> .env
+          echo "ABBYUSERNAME=${{secrets.ABBYUSERNAME}}" > .env
+          echo "ABBYPASSWORD=${{secrets.ABBYPASSWORD}}" > .env
+          echo "EMAIL_TO=${{secrets.EMAIL_TO}}" > .env
           echo "API_KEY=${{ secrets.API_KEY }}" > .env
           echo ".env file created successfully"
 
