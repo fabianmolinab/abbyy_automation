@@ -18,7 +18,7 @@ jobs:
           echo "ABBYYUSERNAME=${{secrets.ABBYYUSERNAME}}" >> .env
           echo "ABBYPASSWORD=${{secrets.ABBYPASSWORD}}" >> .env
           echo "EMAIL_TO=${{secrets.EMAIL_TO}}" >> .env
-          echo "API_KEY=${{ secrets.API_KEY }}" >> .env
+          echo "APIKEY=${{ secrets.API_KEY }}" >> .env
           echo ".env file created successfully"
 
       - name: Validate .env file
