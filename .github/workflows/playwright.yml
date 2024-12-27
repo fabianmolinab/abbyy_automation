@@ -12,21 +12,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check if .env exists
+      - name: Create .env file from repository secrets
+        run: |
+          echo "API_KEY=${{ secrets.API_KEY }}" > .env
+          echo ".env file created successfully"
+
+      - name: Validate .env file
         run: |
           if [ ! -f .env ]; then
-            echo ".env file not found!"
+            echo "Error: .env file not created!"
             exit 1
+          else
+            echo ".env file content:"
+            cat .env
           fi
 
-      - name: Load .env manually
+      - name: Print environment variable from .env
         run: |
-          set -o allexport
           source .env
-          set +o allexport
-
-      - name: Print environment variable
-        run: echo "API_KEY is $API_KEY"
+          echo "API_KEY is $API_KEY"
 
       - name: Configurar Node.js
         uses: actions/setup-node@v4
