@@ -14,6 +14,10 @@ jobs:
 
       - name: Create .env file from repository secrets
         run: |
+        echo "ABBYLINK=${{ secrets.ABBYYLINK}}" > .env
+          echo "ABBYUSERNAME=${{secrets.ABBYUSERNAME}}" >> .env
+          echo "ABBYPASSWORD=${{secrets.ABBYPASSWORD}}" >> .env
+          echo "EMAIL_TO=${{secrets.EMAIL_TO}}" >> .env
           echo "API_KEY=${{ secrets.API_KEY }}" > .env
           echo ".env file created successfully"
 
@@ -26,15 +30,6 @@ jobs:
             echo ".env file content:"
             cat .env
           fi
-
-      - name: Print environment variable from .env
-        run: |
-          source .env
-          echo "API_KEY is $API_KEY"
-
-      - name: Debug environment variables
-        run: |
-          cat .env
 
       - name: Config Node.js
         uses: actions/setup-node@v4
